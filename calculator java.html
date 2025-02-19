@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salaar-Themed Calculator</title>
+    <style>
+        body {
+            background-image: url("https://th.bing.com/th/id/R.2b8d5b1b5a5e5e5e5e5e5e5e5e5e5e5?rik=2b8d5b1b5a5e5e5e&pid=ImgRaw&r=0");
+            background-position: center;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            padding: 20px;
+            width: 300px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .screen {
+            width: 93%;
+            height: 80px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            text-align: right;
+            padding: 10px;
+            font-size: 36px;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        button:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .operator {
+            background: rgba(255, 87, 34, 0.8);
+        }
+        .operator:hover {
+            background: rgba(255, 87, 34, 1);
+        }
+        .equal {
+            background: rgba(76, 175, 80, 0.8);
+            grid-column: span 2;
+        }
+        .equal:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+        .clear {
+            background: rgba(244, 67, 54, 0.8);
+        }
+        .clear:hover {
+            background: rgba(244, 67, 54, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen" id="screen">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearScreen()">AC</button>
+            <button class="clear" onclick="deleteLast()">C</button>
+            <button class="operator" onclick="appendValue('%')">%</button>
+            <button class="operator" onclick="appendValue('/')">/</button>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('')"></button>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">-</button>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let screen = document.getElementById('screen');
+        let expression = '';
+
+        function appendValue(value) {
+            if (expression === '0' && value !== '.') {
+                expression = value;
+            } else {
+                expression += value;
+            }
+            screen.textContent = expression;
+        }
+
+        function clearScreen() {
+            expression = '';
+            screen.textContent = '0';
+        }
+
+        function deleteLast() {
+            expression = expression.slice(0, -1);
+            screen.textContent = expression || '0';
+        }
+
+        function calculateResult() {
+            try {
+                expression = eval(expression).toString();
+                screen.textContent = expression;
+            } catch (error) {
+                screen.textContent = 'Error';
+                expression = '';
+            }
+        }
+    </script>
+</body>
+</html>
